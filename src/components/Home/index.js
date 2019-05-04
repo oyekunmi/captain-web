@@ -9,6 +9,8 @@ import {
   HOME_PAGE_UNLOADED,
   APPLY_TAG_FILTER
 } from '../../constants/actionTypes';
+import { store } from '../../store';
+import { push } from 'connected-react-router'
 
 const Promise = global.Promise;
 
@@ -42,6 +44,9 @@ class Home extends React.PureComponent {
   }
 
   render() {
+    if( !this.props.token)
+      store.dispatch(push('/login'))
+
     return (
       <div className="home-page">
 
