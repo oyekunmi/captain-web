@@ -4,6 +4,7 @@ import _superagent from 'superagent';
 const superagent = superagentPromise(_superagent, global.Promise);
 
 const API_ROOT = 'https://conduit.productionready.io/api';
+const VESSEL_API_ROOT = 'http://captain.moovelogic.com/public/api';
 
 const encode = encodeURIComponent;
 const responseBody = res => res.body;
@@ -26,6 +27,18 @@ const requests = {
   post: (url, body) =>
     superagent.post(`${API_ROOT}${url}`, body).use(tokenPlugin).then(responseBody)
 };
+
+const vesselRequests = {
+  del: url =>
+    superagent.del(`${VESSEL_API_ROOT}${url}`).use(tokenPlugin).then(responseBody),
+  get: url =>
+    superagent.get(`${VESSEL_API_ROOT}${url}`).use(tokenPlugin).then(responseBody),
+  put: (url, body) =>
+    superagent.put(`${VESSEL_API_ROOT}${url}`, body).use(tokenPlugin).then(responseBody),
+  post: (url, body) =>
+    superagent.post(`${VESSEL_API_ROOT}${url}`, body).use(tokenPlugin).then(responseBody)
+};
+
 
 const Auth = {
   current: () =>
@@ -78,6 +91,15 @@ const Comments = {
     requests.get(`/articles/${slug}/comments`)
 };
 
+const Vessels = {
+  all: () =>  vesselRequests.get('/vessels'),
+  get: (id) => vesselRequests.get(`/vessels/${id}`),
+};
+
+const Certificates = {
+  byVessel: (id) => vesselRequests.get(`/vessels/${id}/certificates`)
+}
+
 const Profile = {
   follow: username =>
     requests.post(`/profiles/${username}/follow`),
@@ -93,5 +115,7 @@ export default {
   Comments,
   Profile,
   Tags,
+  Vessels,
+  Certificates,
   setToken: _token => { token = _token; }
 };
