@@ -4,7 +4,7 @@ import _superagent from 'superagent';
 const superagent = superagentPromise(_superagent, global.Promise);
 
 const API_ROOT = 'https://conduit.productionready.io/api';
-const VESSEL_API_ROOT = 'http://captain.moovelogic.com/public/api';
+const VESSEL_API_ROOT = 'http://captain.moovelogic.com/api';
 
 const encode = encodeURIComponent;
 const responseBody = res => res.body;
