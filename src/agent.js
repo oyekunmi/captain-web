@@ -46,7 +46,7 @@ const vesselRequests = {
 
 const Auth = {
   current: () =>
-    requests.get('/user'),
+    requests.get('/v1/user'),
   login: (password) =>
     requests.post('/v1/auth', { token: password }),
   register: (username, email, password) =>
