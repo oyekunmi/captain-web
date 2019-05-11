@@ -6,8 +6,8 @@ import { APP_LOAD, REDIRECT } from '../constants/actionTypes'
 import { Route, Switch } from 'react-router-dom'
 import { store } from '../store'
 import { push } from 'connected-react-router'
-// const Home = lazy(() => import('../components/Home'/* webpackChunkName: "Home", webpackPreload: true  */))
-import Home from '../components/Home'
+const Home = lazy(() => import('../components/Home'/* webpackChunkName: "Home", webpackPreload: true  */))
+// import Home from '../components/Home'
 const Login = lazy(() => import('../components/Login'/* webpackChunkName: "Login", webpackPrefetch: true  */))
 const Vessel = lazy(() => import('../components/Vessel'/* webpackChunkName: "Settings", webpackPrefetch: true  */))
 

@@ -3,9 +3,10 @@ import _superagent from 'superagent';
 
 const superagent = superagentPromise(_superagent, global.Promise);
 
-const API_ROOT = 'https://conduit.productionready.io/api';
+// const API_ROOT = 'https://conduit.productionready.io/api';
 // const VESSEL_API_ROOT = 'http://captain.moovelogic.com/api';
 const VESSEL_API_ROOT = 'http://localhost:8081/api';
+const API_ROOT = 'http://localhost:8081/api';
 
 // const encode = encodeURIComponent;
 const responseBody = res => res.body;
@@ -13,7 +14,7 @@ const responseBody = res => res.body;
 let token = null;
 const tokenPlugin = req => {
   if (token) {
-    req.set('authorization', `Token ${token}`);
+    req.set('Authorization', `Bearer ${token}`);
   }
 }
 const vesselTokenPlugin = req => {
@@ -46,8 +47,8 @@ const vesselRequests = {
 const Auth = {
   current: () =>
     requests.get('/user'),
-  login: (email, password) =>
-    requests.post('/users/login', { user: { email, password } }),
+  login: (password) =>
+    requests.post('/auth', { token: password }),
   register: (username, email, password) =>
     requests.post('/users', { user: { username, email, password } }),
   save: user =>

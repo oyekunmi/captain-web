@@ -1,14 +1,26 @@
 import {
   LOGIN,
-  LOGIN_PAGE_UNLOADED,
+  // LOGIN_PAGE_LOADED,
+  // LOGIN_PAGE_UNLOADED,
   ASYNC_START,
-  UPDATE_FIELD_AUTH
+  UPDATE_FIELD_AUTH,
 } from '../constants/actionTypes';
 
-export default (state = {}, action) => {
+const defaultState = {
+  password: '',
+};
+
+export default (state = defaultState, action) => {
   switch (action.type) {
+    // case LOGIN_PAGE_LOADED:
+    //   return {...state, password: ''}
+    // case LOGIN_PAGE_UNLOADED:
     case LOGIN:
-    case LOGIN_PAGE_UNLOADED:
+      return {
+        ...state,
+        inProgress: false,
+        errors: action.error ? action.payload.errors : null
+      };
     case ASYNC_START:
       if (action.subtype === LOGIN) {
         return { ...state, inProgress: true };

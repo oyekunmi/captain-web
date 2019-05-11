@@ -7,8 +7,6 @@ import {
   HOME_PAGE_LOADED,
   HOME_PAGE_UNLOADED,
 } from '../../constants/actionTypes';
-import { store } from '../../store';
-import { push } from 'connected-react-router'
 
 const Promise = global.Promise;
 
@@ -35,9 +33,7 @@ class Home extends React.PureComponent {
   }
 
   render() {
-    if( !this.props.token){
-      store.dispatch(push('/login'))
-    }
+   
     if(!this.props.vessels){
       return ("");
     }
