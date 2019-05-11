@@ -18,11 +18,11 @@ const LoggedOutView = React.memo(props => {
           </Link>
         </li>
 
-        <li className="nav-item">
+        {/* <li className="nav-item">
           <Link to="/register" className="nav-link">
             Sign up
           </Link>
-        </li>
+        </li> */}
 
       </ul>
     );
@@ -41,17 +41,17 @@ const LoggedInView = React.memo(props => {
           </Link>
         </li>
 
-        <li className="nav-item">
+        {/* <li className="nav-item">
           <Link to="/editor" className="nav-link">
-            <i className="ion-compose"></i>&nbsp;New Post
+            <i className="ion-compose"></i>&nbsp;Add Certificate
           </Link>
-        </li>
+        </li> */}
 
-        <li className="nav-item">
+        {/* <li className="nav-item">
           <Link to="/settings" className="nav-link">
             <i className="ion-gear-a"></i>&nbsp;Settings
           </Link>
-        </li>
+        </li> */}
 
         <li className="nav-item">
           <Link

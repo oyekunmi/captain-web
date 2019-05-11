@@ -4,17 +4,20 @@ import _superagent from 'superagent';
 const superagent = superagentPromise(_superagent, global.Promise);
 
 const API_ROOT = 'https://conduit.productionready.io/api';
-const VESSEL_API_ROOT = 'http://captain.moovelogic.com/api';
+// const VESSEL_API_ROOT = 'http://captain.moovelogic.com/api';
+const VESSEL_API_ROOT = 'http://localhost:8081/api';
 
-const encode = encodeURIComponent;
+// const encode = encodeURIComponent;
 const responseBody = res => res.body;
 
 let token = null;
 const tokenPlugin = req => {
   if (token) {
     req.set('authorization', `Token ${token}`);
-    req.set('Authorization', `Bearer ${token}`);
   }
+}
+const vesselTokenPlugin = req => {
+  req.set('Authorization', `Bearer SHmkX`);
 }
 
 const requests = {
@@ -30,13 +33,13 @@ const requests = {
 
 const vesselRequests = {
   del: url =>
-    superagent.del(`${VESSEL_API_ROOT}${url}`).use(tokenPlugin).then(responseBody),
+    superagent.del(`${VESSEL_API_ROOT}${url}`).use(vesselTokenPlugin).then(responseBody),
   get: url =>
-    superagent.get(`${VESSEL_API_ROOT}${url}`).use(tokenPlugin).then(responseBody),
+    superagent.get(`${VESSEL_API_ROOT}${url}`).use(vesselTokenPlugin).then(responseBody),
   put: (url, body) =>
-    superagent.put(`${VESSEL_API_ROOT}${url}`, body).use(tokenPlugin).then(responseBody),
+    superagent.put(`${VESSEL_API_ROOT}${url}`, body).use(vesselTokenPlugin).then(responseBody),
   post: (url, body) =>
-    superagent.post(`${VESSEL_API_ROOT}${url}`, body).use(tokenPlugin).then(responseBody)
+    superagent.post(`${VESSEL_API_ROOT}${url}`, body).use(vesselTokenPlugin).then(responseBody)
 };
 
 
@@ -51,46 +54,6 @@ const Auth = {
     requests.put('/user', { user })
 };
 
-const Tags = {
-  getAll: () => requests.get('/tags')
-};
-
-const limit = (count, p) => `limit=${count}&offset=${p ? p * count : 0}`;
-const omitSlug = article => Object.assign({}, article, { slug: undefined })
-const Articles = {
-  all: page =>
-    requests.get(`/articles?${limit(10, page)}`),
-  byAuthor: (author, page) =>
-    requests.get(`/articles?author=${encode(author)}&${limit(5, page)}`),
-  byTag: (tag, page) =>
-    requests.get(`/articles?tag=${encode(tag)}&${limit(10, page)}`),
-  del: slug =>
-    requests.del(`/articles/${slug}`),
-  favorite: slug =>
-    requests.post(`/articles/${slug}/favorite`),
-  favoritedBy: (author, page) =>
-    requests.get(`/articles?favorited=${encode(author)}&${limit(5, page)}`),
-  feed: () =>
-    requests.get('/articles/feed?limit=10&offset=0'),
-  get: slug =>
-    requests.get(`/articles/${slug}`),
-  unfavorite: slug =>
-    requests.del(`/articles/${slug}/favorite`),
-  update: article =>
-    requests.put(`/articles/${article.slug}`, { article: omitSlug(article) }),
-  create: article =>
-    requests.post('/articles', { article })
-};
-
-const Comments = {
-  create: (slug, comment) =>
-    requests.post(`/articles/${slug}/comments`, { comment }),
-  delete: (slug, commentId) =>
-    requests.del(`/articles/${slug}/comments/${commentId}`),
-  forArticle: slug =>
-    requests.get(`/articles/${slug}/comments`)
-};
-
 const Vessels = {
   all: () =>  vesselRequests.get('/vessels'),
   get: (id) => vesselRequests.get(`/vessels/${id}`),
@@ -100,21 +63,8 @@ const Certificates = {
   byVessel: (id) => vesselRequests.get(`/vessels/${id}/certificates`)
 }
 
-const Profile = {
-  follow: username =>
-    requests.post(`/profiles/${username}/follow`),
-  get: username =>
-    requests.get(`/profiles/${username}`),
-  unfollow: username =>
-    requests.del(`/profiles/${username}/follow`)
-};
-
 export default {
-  Articles,
   Auth,
-  Comments,
-  Profile,
-  Tags,
   Vessels,
   Certificates,
   setToken: _token => { token = _token; }

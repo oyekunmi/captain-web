@@ -15,11 +15,14 @@ const mapDispatchToProps = dispatch => ({
 });
 
 class Vessel extends React.PureComponent {
+
   componentDidMount() {
+    
     this.props.onLoad(Promise.all([
       agent.Vessels.get(this.props.match.params.id),
       agent.Certificates.byVessel(this.props.match.params.id),
     ]));
+
   }
 
   render() {

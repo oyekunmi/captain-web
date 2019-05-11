@@ -1,18 +1,18 @@
-import ArticlePreview from './ArticlePreview';
+import VesselPreview from './VesselPreview';
 import ListPagination from './ListPagination';
 import React from 'react';
 
-const ArticleList = React.memo(props => {
-  if (!props.articles) {
+const VesselList = React.memo(props => {
+  if (!props.vessels) {
     return (
       <div className="article-preview">Loading...</div>
     );
   }
 
-  if (props.articles.length === 0) {
+  if (props.vessels.length === 0) {
     return (
       <div className="article-preview">
-        No articles are here... yet.
+        No vessels are here... yet.
       </div>
     );
   }
@@ -20,9 +20,9 @@ const ArticleList = React.memo(props => {
   return (
     <div>
       {
-        props.articles.map(article => {
+        props.vessels.map(vessel => {
           return (
-            <ArticlePreview article={article} key={article.slug} />
+            <VesselPreview vessel={vessel} key={vessel.id} />
           );
         })
       }
@@ -35,4 +35,4 @@ const ArticleList = React.memo(props => {
   );
 });
 
-export default ArticleList;
+export default VesselList;

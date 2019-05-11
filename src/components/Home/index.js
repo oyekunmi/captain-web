@@ -1,13 +1,11 @@
 import Banner from './Banner';
 import MainView from './MainView';
 import React from 'react';
-import Tags from './Tags';
 import agent from '../../agent';
 import { connect } from 'react-redux';
 import {
   HOME_PAGE_LOADED,
   HOME_PAGE_UNLOADED,
-  APPLY_TAG_FILTER
 } from '../../constants/actionTypes';
 import { store } from '../../store';
 import { push } from 'connected-react-router'
@@ -21,22 +19,15 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onClickTag: (tag, pager, payload) =>
-    dispatch({ type: APPLY_TAG_FILTER, tag, pager, payload }),
-  onLoad: (tab, pager, payload) =>
-    dispatch({ type: HOME_PAGE_LOADED, tab, pager, payload }),
+  onLoad: (payload) =>
+    dispatch({ type: HOME_PAGE_LOADED, payload }),
   onUnload: () =>
     dispatch({  type: HOME_PAGE_UNLOADED })
 });
 
 class Home extends React.PureComponent {
   componentDidMount() {
-    const tab = this.props.token ? 'feed' : 'all';
-    const articlesPromise = this.props.token ?
-      agent.Articles.feed :
-      agent.Articles.all;
-
-    this.props.onLoad(tab, articlesPromise, Promise.all([agent.Tags.getAll(), articlesPromise()]));
+    this.props.onLoad( Promise.all([agent.Vessels.all()]) );
   }
 
   componentWillUnmount() {
@@ -44,8 +35,17 @@ class Home extends React.PureComponent {
   }
 
   render() {
-    if( !this.props.token)
+    if( !this.props.token){
       store.dispatch(push('/login'))
+    }
+    if(!this.props.vessels){
+      return ("");
+    }
+    
+    let items = [];
+    this.props.vessels.forEach( (item, index)=>{
+      items.push(<li key={index}>{item.name}</li>)
+    });
 
     return (
       <div className="home-page">
@@ -54,19 +54,21 @@ class Home extends React.PureComponent {
 
         <div className="container page">
           <div className="row">
-            <MainView />
-
-            <div className="col-md-3">
+          
+          <div className="col-md-3">
               <div className="sidebar">
 
-                <p>Popular Tags</p>
+                <p>Vessels</p>
 
-                <Tags
-                  tags={this.props.tags}
-                  onClickTag={this.props.onClickTag} />
+                {items}
+
 
               </div>
             </div>
+            
+            <MainView />
+
+
           </div>
         </div>
 

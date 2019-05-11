@@ -1,68 +1,68 @@
-import ArticleList from '../ArticleList';
 import React from 'react';
 import agent from '../../agent';
 import { connect } from 'react-redux';
 import { CHANGE_TAB } from '../../constants/actionTypes';
+import CertificateList from '../CertificateList';
 
-const YourFeedTab = React.memo(props => {
-  if (props.token) {
-    const clickHandler = ev => {
-      ev.preventDefault();
-      props.onTabClick('feed', agent.Articles.feed, agent.Articles.feed());
-    }
-
-    return (
-      <li className="nav-item">
-        <a  href=""
-            className={ props.tab === 'feed' ? 'nav-link active' : 'nav-link' }
-            onClick={clickHandler}>
-          Your Feed
-        </a>
-      </li>
-    );
-  }
-  return null;
-});
-
-const GlobalFeedTab = React.memo(props => {
+const ExpiringTab = React.memo(props =>{
   const clickHandler = ev => {
     ev.preventDefault();
-    props.onTabClick('all', agent.Articles.all, agent.Articles.all());
-  };
+    props.onTabClick('expiring', agent.Articles.feed, agent.Articles.feed());
+  }
+
   return (
     <li className="nav-item">
-      <a
-        href=""
-        className={ props.tab === 'all' ? 'nav-link active' : 'nav-link' }
-        onClick={clickHandler}>
-        Global Feed
+      <a  href="#/"
+          className={ props.tab === 'expiring' ? 'nav-link active' : 'nav-link' }
+          onClick={clickHandler}>
+        Expiring Certificates
       </a>
     </li>
   );
 });
 
-const TagFilterTab = React.memo(props => {
-  if (!props.tag) {
-    return null;
+const ExpiredTab = React.memo(props => {
+  const clickHandler = ev => {
+    ev.preventDefault();
+    props.onTabClick('expired', agent.Articles.feed, agent.Articles.feed());
   }
 
   return (
     <li className="nav-item">
-      <a href="" className="nav-link active">
-        <i className="ion-pound"></i> {props.tag}
+      <a  href="#/"
+          className={ props.tab === 'expired' ? 'nav-link active' : 'nav-link' }
+          onClick={clickHandler}>
+       Expired Certificates
+      </a>
+    </li>
+  );
+});
+
+const HealthyTab = React.memo(props => {
+  const clickHandler = ev => {
+    ev.preventDefault();
+    props.onTabClick('healthy', agent.Articles.feed, agent.Articles.feed());
+  }
+
+  return (
+    <li className="nav-item">
+      <a  href="#/"
+          className={ props.tab === 'healthy' ? 'nav-link active' : 'nav-link' }
+          onClick={clickHandler}>
+        Healthy Certificates
       </a>
     </li>
   );
 });
 
 const mapStateToProps = state => ({
-  ...state.articleList,
+  ...state.certificateList,
   tags: state.home.tags,
   token: state.common.token
 });
 
 const mapDispatchToProps = dispatch => ({
-  onTabClick: (tab, pager, payload) => dispatch({ type: CHANGE_TAB, tab, pager, payload })
+  onTabClick: (tab, payload) => dispatch({ type: CHANGE_TAB, tab, payload })
 });
 
 const MainView = React.memo(props => {
@@ -71,24 +71,22 @@ const MainView = React.memo(props => {
       <div className="feed-toggle">
         <ul className="nav nav-pills outline-active">
 
-          <YourFeedTab
+          <ExpiringTab
             token={props.token}
             tab={props.tab}
             onTabClick={props.onTabClick} />
 
-          <GlobalFeedTab tab={props.tab} onTabClick={props.onTabClick} />
+          <ExpiredTab tab={props.tab} onTabClick={props.onTabClick} />
 
-          <TagFilterTab tag={props.tag} />
+          <HealthyTab tag={props.tag} />
 
         </ul>
       </div>
 
-      <ArticleList
-        pager={props.pager}
-        articles={props.articles}
+      <CertificateList
+        certificates={props.certificates}
         loading={props.loading}
-        articlesCount={props.articlesCount}
-        currentPage={props.currentPage} />
+      />
     </div>
   );
 });
