@@ -56,9 +56,11 @@ const HealthyTab = React.memo(props => {
 });
 
 const mapStateToProps = state => ({
-  ...state.certificateList,
+  ...state,
   tags: state.home.tags,
-  token: state.common.token
+  token: state.common.token,
+  certificates: state.home.certificates,
+  vessel: state.home.vessel,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -66,9 +68,19 @@ const mapDispatchToProps = dispatch => ({
 });
 
 const MainView = React.memo(props => {
+
+  if(!props.vessel){
+    return (
+      <div>
+        Select a vessel to see certificates
+      </div>
+    )
+  }
   return (
     <div className="col-md-9">
-      <div className="feed-toggle">
+
+      <h2>{props.vessel.name}</h2>
+      {/* <div className="feed-toggle">
         <ul className="nav nav-pills outline-active">
 
           <ExpiringTab
@@ -81,7 +93,7 @@ const MainView = React.memo(props => {
           <HealthyTab tag={props.tag} />
 
         </ul>
-      </div>
+      </div> */}
 
       <CertificateList
         certificates={props.certificates}

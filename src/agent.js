@@ -3,10 +3,10 @@ import _superagent from 'superagent';
 
 const superagent = superagentPromise(_superagent, global.Promise);
 
-// const API_ROOT = 'https://conduit.productionready.io/api';
-// const VESSEL_API_ROOT = 'http://captain.moovelogic.com/api';
-const VESSEL_API_ROOT = 'http://localhost:8081/api';
-const API_ROOT = 'http://localhost:8081/api';
+const API_ROOT = 'https://captain.moovelogic.com/api';
+const VESSEL_API_ROOT = 'https://captain.moovelogic.com/api';
+// const VESSEL_API_ROOT = 'http://localhost:8081/api';
+// const API_ROOT = 'http://localhost:8081/api';
 
 // const encode = encodeURIComponent;
 const responseBody = res => res.body;
@@ -16,9 +16,6 @@ const tokenPlugin = req => {
   if (token) {
     req.set('Authorization', `Bearer ${token}`);
   }
-}
-const vesselTokenPlugin = req => {
-  req.set('Authorization', `Bearer SHmkX`);
 }
 
 const requests = {
@@ -34,13 +31,13 @@ const requests = {
 
 const vesselRequests = {
   del: url =>
-    superagent.del(`${VESSEL_API_ROOT}${url}`).use(vesselTokenPlugin).then(responseBody),
+    superagent.del(`${VESSEL_API_ROOT}${url}`).use(tokenPlugin).then(responseBody),
   get: url =>
-    superagent.get(`${VESSEL_API_ROOT}${url}`).use(vesselTokenPlugin).then(responseBody),
+    superagent.get(`${VESSEL_API_ROOT}${url}`).use(tokenPlugin).then(responseBody),
   put: (url, body) =>
-    superagent.put(`${VESSEL_API_ROOT}${url}`, body).use(vesselTokenPlugin).then(responseBody),
+    superagent.put(`${VESSEL_API_ROOT}${url}`, body).use(tokenPlugin).then(responseBody),
   post: (url, body) =>
-    superagent.post(`${VESSEL_API_ROOT}${url}`, body).use(vesselTokenPlugin).then(responseBody)
+    superagent.post(`${VESSEL_API_ROOT}${url}`, body).use(tokenPlugin).then(responseBody)
 };
 
 
