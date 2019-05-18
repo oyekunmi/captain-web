@@ -6,10 +6,12 @@ import { APP_LOAD, REDIRECT } from '../constants/actionTypes'
 import { Route, Switch } from 'react-router-dom'
 import { store } from '../store'
 import { push } from 'connected-react-router'
+
 const Home = lazy(() => import('../components/Home'/* webpackChunkName: "Home", webpackPreload: true  */))
 // import Home from '../components/Home'
 const Login = lazy(() => import('../components/Login'/* webpackChunkName: "Login", webpackPrefetch: true  */))
 const Vessel = lazy(() => import('../components/Vessel'/* webpackChunkName: "Settings", webpackPrefetch: true  */))
+const AddCertificate = lazy(() => import('../components/Certificate/AddCertificate'))
 
 const mapStateToProps = state => {
   return {
@@ -57,6 +59,7 @@ class App extends React.PureComponent {
                 <Route exact path='/' component={Home} />
                 <Route path='/login' component={Login} />
                 <Route path='/vessel/:id' component={Vessel} />
+                <Route path='/certificate/add' component={AddCertificate} />
               </Switch>
             </Suspense>
         </div>

@@ -47,11 +47,11 @@ const LoggedInView = React.memo(props => {
           </Link>
         </li> */}
 
-        {/* <li className="nav-item">
-          <Link to="/settings" className="nav-link">
-            <i className="ion-gear-a"></i>&nbsp;Settings
+        <li className="nav-item">
+          <Link to="/certificate/add" className="nav-link">
+            <i className="ion-gear-a"></i>&nbsp;Add Certificate
           </Link>
-        </li> */}
+        </li>
 
         <li className="nav-item">
           <Link

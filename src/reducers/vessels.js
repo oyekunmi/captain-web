@@ -5,13 +5,6 @@ import {
 
 export default (state = {}, action) => {
   switch (action.type) {
-    case HOME_PAGE_LOADED:
-      return {
-        ...state,
-        vessels: action.payload[0],
-      };
-    case HOME_PAGE_UNLOADED:
-      return {};
     default:
       return state;
   }

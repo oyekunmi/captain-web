@@ -15,7 +15,8 @@ const Promise = global.Promise;
 const mapStateToProps = state => ({
   ...state.home,
   appName: state.common.appName,  
-  token: state.common.token
+  token: state.common.token,
+  vessels: state.common.vessels
 });
 
 const mapDispatchToProps = dispatch => ({

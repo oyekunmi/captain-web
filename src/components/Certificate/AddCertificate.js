@@ -1,78 +1,169 @@
-// import ListErrors from './ListErrors';
-// import React from 'react';
-// import agent from '../agent';
-// import { connect } from 'react-redux';
-// import {
-//   UPDATE_FIELD_AUTH,
-//   LOGIN,
-//   // LOGIN_PAGE_UNLOADED
-// } from '../constants/actionTypes';
+import ListErrors from './../ListErrors';
+import React from 'react';
+import agent from '../../agent';
+import { connect } from 'react-redux';
+import Select from 'react-select'; 
+import {
+  ADD_CERTIFICATE_PAGE_LOADED,
+  ADD_CERTIFICATE_PAGE_UNLOADED,
+  ADD_CERTIFICATE,
+  UPDATE_FIELD_CERTIFICATE,
+} from '../../constants/actionTypes';
 
-// const mapStateToProps = state => ({ ...state.auth });
+const mapStateToProps = state => ({ 
+  certificate: state.certificate,
+  vessels: state.common.vessels
+ });
 
-// const mapDispatchToProps = dispatch => ({
-//   onChangePassword: value =>
-//     dispatch({ type: UPDATE_FIELD_AUTH, key: 'password', value }),
-//   onSubmit: (password) =>
-//     dispatch({ type: LOGIN, payload: agent.Auth.login(password) }),
-//   // onUnload: () =>
-//   //   dispatch({ type: LOGIN_PAGE_UNLOADED })
-// });
+const mapDispatchToProps = dispatch => ({
+  // this.props.onLoad( Promise.all([agent.Vessels.all()]) );
 
-// class Certificate extends React.PureComponent {
-//   constructor() {
-//     super();
-//     // this.changePassword = ev => this.props.onChangePassword(ev.target.value);
-//     this.submitForm = (vessel_id, name, description, group, issue, expiry, annual) => ev => {
-//       ev.preventDefault();
-//       this.props.onSubmit(vessel_id, name, description, group, issue, expiry, annual);
-//     };
-//   }
+  onLoad: () =>
+    dispatch({ type: ADD_CERTIFICATE_PAGE_LOADED, payload: agent.Vessels.all() }),
+  onChangeField: (evt) =>
+    dispatch({ type: UPDATE_FIELD_CERTIFICATE, key: evt.target.name, value: evt.target.value }),
+  onSubmit: (certificate) =>
+    dispatch({ type: ADD_CERTIFICATE, payload: agent.Certificates.save(certificate) }),
+  onUnload: () =>
+    dispatch({ type: ADD_CERTIFICATE_PAGE_UNLOADED })
+});
 
-//   componentWillUnmount() {
-//     // this.props.onUnload(); 
-//   }
+class AddCertificate extends React.PureComponent {
+  constructor() {
+    super();
+    this.onChangeField = ev => this.props.onChangeField(ev);
+    this.submitForm = ev => {
+      ev.preventDefault();
+      this.props.onSubmit(this.props.certificate);
+    };
+  }
 
-//   render() {
-//     const password = this.props.password;
-//     return (
-//       <div className="auth-page">
-//         <div className="container page">
-//           <div className="row">
+  componentDidMount(){
+    this.props.onLoad();
+  }
 
-//             <div className="col-md-6 offset-md-3 col-xs-12">
-//               <h1 className="text-xs-center">Sign In</h1>
+  componentWillUnmount() {
+    this.props.onUnload(); 
+  }
 
-//               <ListErrors errors={this.props.errors} />
+  render() {
+    const { vessel_id, name, description, group, issue, expiry, renewals } = this.props.certificate;
+    const options = this.props.vessels && this.props.vessels.map(item => {
+      return <option key={item.id} value={item.id}>{item.name}</option>;
+    });
 
-//               <form onSubmit={this.submitForm(password)}>
-//                 <fieldset>
+    if(!options) 
+      return "";
 
-//                   <fieldset className="form-group">
-//                     <input
-//                       className="form-control form-control-lg"
-//                       type="password"
-//                       placeholder="Enter pass code"
-//                       value={password}
-//                       onChange={this.changePassword} />
-//                   </fieldset>
+    return (
+      <div className="auth-page">
+         <div className="container page">
+           <div className="row">
 
-//                   <button
-//                     className="btn btn-lg btn-primary pull-xs-right"
-//                     type="submit"
-//                     disabled={this.props.inProgress}>
-//                     Sign in
-//                   </button>
+             <div className="col-md-6 offset-md-3 col-xs-12">
+               <h1 className="text-xs-center">ADD CERTIFICATE</h1>
 
-//                 </fieldset>
-//               </form>
-//             </div>
+               <ListErrors errors={this.props.errors} />
 
-//           </div>
-//         </div>
-//       </div>
-//     );
-//   }
-// }
+               <form onSubmit={this.submitForm}>
+                 <fieldset>
+                   
+                  <fieldset className="form-group">
+                    <label>Select Vessel</label>
+                    <select value={vessel_id} onChange={this.onChangeField} name="vessel_id">
+                      <option value="">...select...</option>
+                      {options}
+                    </select>
+                  </fieldset>
 
-// export default connect(mapStateToProps, mapDispatchToProps)(Login);
+                   <fieldset className="form-group">
+                    <label>Name</label>
+                     <input
+                      className="form-control form-control-lg"
+                      type="text"
+                      placeholder="Name"
+                      value={name}
+                      name="name"
+                      onChange={this.onChangeField} 
+                      />
+                  </fieldset>
+
+                  <fieldset className="form-group">
+                    <label>Description</label>
+                     <input
+                      className="form-control form-control-lg"
+                      type="text"
+                      placeholder="Description"
+                      value={description}
+                      name="description"
+                      onChange={this.onChangeField} 
+                      />
+                  </fieldset>
+
+                  <fieldset className="form-group">
+                    <label>Group</label>
+                     <input
+                      className="form-control form-control-lg"
+                      type="text"
+                      placeholder="Group"
+                      value={group}
+                      name="group"
+                      onChange={this.onChangeField} 
+                      />
+                  </fieldset>
+
+                  <fieldset className="form-group">
+                    <label>Issue Date</label>
+                     <input
+                      className="form-control form-control-lg"
+                      type="date"
+                      placeholder="Issue Date"
+                      value={issue}
+                      name="issue"
+                      onChange={this.onChangeField} 
+                      />
+                  </fieldset>
+
+                  <fieldset className="form-group">
+                    <label>Expiry Date</label>
+                     <input
+                      className="form-control form-control-lg"
+                      type="date"
+                      placeholder="Expiry Date"
+                      value={expiry}
+                      name="expiry"
+                      onChange={this.onChangeField} 
+                      />
+                  </fieldset>
+
+                  <fieldset className="form-group">
+                    <label>Renewals</label>
+                     <input
+                      className="form-control form-control-lg"
+                      type="text"
+                      placeholder="Renewal Frequency"
+                      value={renewals}
+                      name="renewals"
+                      onChange={this.onChangeField} 
+                      />
+                  </fieldset>
+
+                  <button
+                    className="btn btn-lg btn-primary pull-xs-right"
+                    type="submit"
+                    disabled={this.props.inProgress}>
+                    Add Certificate
+                  </button>
+
+                </fieldset>
+              </form>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddCertificate);

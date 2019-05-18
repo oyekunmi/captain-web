@@ -3,10 +3,10 @@ import _superagent from 'superagent';
 
 const superagent = superagentPromise(_superagent, global.Promise);
 
-const API_ROOT = 'https://captain.moovelogic.com/api';
-const VESSEL_API_ROOT = 'https://captain.moovelogic.com/api';
-// const VESSEL_API_ROOT = 'http://localhost:8081/api';
-// const API_ROOT = 'http://localhost:8081/api';
+// const API_ROOT = 'https://captain.moovelogic.com/api';
+// const VESSEL_API_ROOT = 'https://captain.moovelogic.com/api';
+const VESSEL_API_ROOT = 'http://localhost:8081/api';
+const API_ROOT = 'http://localhost:8081/api';
 
 // const encode = encodeURIComponent;
 const responseBody = res => res.body;
@@ -58,7 +58,8 @@ const Vessels = {
 };
 
 const Certificates = {
-  byVessel: (id) => vesselRequests.get(`/vessels/${id}/certificates`)
+  byVessel: (id) => vesselRequests.get(`/vessels/${id}/certificates`),
+  save: cert => requests.post(`/vessels/${cert.vessel_id}/certificates`, cert)
 }
 
 export default {
