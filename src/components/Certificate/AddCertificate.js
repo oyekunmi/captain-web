@@ -52,8 +52,8 @@ class AddCertificate extends React.PureComponent {
       return <option key={item.id} value={item.id}>{item.name}</option>;
     });
 
-    if(!options) 
-      return "";
+    // if(!options) 
+    //   return "";
 
     return (
       <div className="auth-page">

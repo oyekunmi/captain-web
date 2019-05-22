@@ -10,6 +10,7 @@ import { push } from 'connected-react-router'
 const Home = lazy(() => import('../components/Home'/* webpackChunkName: "Home", webpackPreload: true  */))
 // import Home from '../components/Home'
 const Login = lazy(() => import('../components/Login'/* webpackChunkName: "Login", webpackPrefetch: true  */))
+const AddVessel = lazy(() => import('../components/AddVessel'/* webpackChunkName: "Settings", webpackPrefetch: true  */))
 const Vessel = lazy(() => import('../components/Vessel'/* webpackChunkName: "Settings", webpackPrefetch: true  */))
 const AddCertificate = lazy(() => import('../components/Certificate/AddCertificate'))
 
@@ -58,6 +59,7 @@ class App extends React.PureComponent {
               <Switch>
                 <Route exact path='/' component={Home} />
                 <Route path='/login' component={Login} />
+                <Route path='/vessel' component={AddVessel} />
                 <Route path='/vessel/:id' component={Vessel} />
                 <Route path='/certificate/add' component={AddCertificate} />
               </Switch>

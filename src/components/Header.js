@@ -54,6 +54,12 @@ const LoggedInView = React.memo(props => {
         </li>
 
         <li className="nav-item">
+          <Link to="/vessel/add" className="nav-link">
+            <i className="ion-gear-a"></i>&nbsp;Add Vessel
+          </Link>
+        </li>
+
+        <li className="nav-item">
           <Link
             to={`/@${props.currentUser.username}`}
             className="nav-link">

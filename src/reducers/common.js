@@ -4,7 +4,8 @@ import {
   LOGOUT,
   LOGIN,
   ADD_CERTIFICATE,
-  HOME_PAGE_LOADED
+  HOME_PAGE_LOADED,
+  ADD_VESSEL
 } from '../constants/actionTypes';
 
 const defaultState = {
@@ -36,7 +37,7 @@ export default (state = defaultState, action) => {
         ...state,
         vessels: action.payload[0]
       };
-    case ADD_CERTIFICATE:
+    case ADD_CERTIFICATE || ADD_VESSEL:
       return {
         ...state,
         redirectTo: action.error ? null : '/'
