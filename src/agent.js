@@ -12,7 +12,7 @@ const VESSEL_API_ROOT = 'https://captain.moovelogic.com/api';
 const responseBody = res => res.body;
 
 let token = null;
-const tokenPlugin = req => {
+const tokenPlugin = req => {  
   if (token) {
     req.set('Authorization', `Bearer ${token}`);
   }
