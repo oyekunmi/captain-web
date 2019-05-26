@@ -1,59 +1,59 @@
 import React from 'react';
-import agent from '../../agent';
+// import agent from '../../agent';
 import { connect } from 'react-redux';
 import { CHANGE_TAB } from '../../constants/actionTypes';
 import CertificateList from '../CertificateList';
 
-const ExpiringTab = React.memo(props =>{
-  const clickHandler = ev => {
-    ev.preventDefault();
-    props.onTabClick('expiring', agent.Articles.feed, agent.Articles.feed());
-  }
+// const ExpiringTab = React.memo(props =>{
+//   const clickHandler = ev => {
+//     ev.preventDefault();
+//     props.onTabClick('expiring', agent.Articles.feed, agent.Articles.feed());
+//   }
 
-  return (
-    <li className="nav-item">
-      <a  href="#/"
-          className={ props.tab === 'expiring' ? 'nav-link active' : 'nav-link' }
-          onClick={clickHandler}>
-        Expiring Certificates
-      </a>
-    </li>
-  );
-});
+//   return (
+//     <li className="nav-item">
+//       <a  href="#/"
+//           className={ props.tab === 'expiring' ? 'nav-link active' : 'nav-link' }
+//           onClick={clickHandler}>
+//         Expiring Certificates
+//       </a>
+//     </li>
+//   );
+// });
 
-const ExpiredTab = React.memo(props => {
-  const clickHandler = ev => {
-    ev.preventDefault();
-    props.onTabClick('expired', agent.Articles.feed, agent.Articles.feed());
-  }
+// const ExpiredTab = React.memo(props => {
+//   const clickHandler = ev => {
+//     ev.preventDefault();
+//     props.onTabClick('expired', agent.Articles.feed, agent.Articles.feed());
+//   }
 
-  return (
-    <li className="nav-item">
-      <a  href="#/"
-          className={ props.tab === 'expired' ? 'nav-link active' : 'nav-link' }
-          onClick={clickHandler}>
-       Expired Certificates
-      </a>
-    </li>
-  );
-});
+//   return (
+//     <li className="nav-item">
+//       <a  href="#/"
+//           className={ props.tab === 'expired' ? 'nav-link active' : 'nav-link' }
+//           onClick={clickHandler}>
+//        Expired Certificates
+//       </a>
+//     </li>
+//   );
+// });
 
-const HealthyTab = React.memo(props => {
-  const clickHandler = ev => {
-    ev.preventDefault();
-    props.onTabClick('healthy', agent.Articles.feed, agent.Articles.feed());
-  }
+// const HealthyTab = React.memo(props => {
+//   const clickHandler = ev => {
+//     ev.preventDefault();
+//     props.onTabClick('healthy', agent.Articles.feed, agent.Articles.feed());
+//   }
 
-  return (
-    <li className="nav-item">
-      <a  href="#/"
-          className={ props.tab === 'healthy' ? 'nav-link active' : 'nav-link' }
-          onClick={clickHandler}>
-        Healthy Certificates
-      </a>
-    </li>
-  );
-});
+//   return (
+//     <li className="nav-item">
+//       <a  href="#/"
+//           className={ props.tab === 'healthy' ? 'nav-link active' : 'nav-link' }
+//           onClick={clickHandler}>
+//         Healthy Certificates
+//       </a>
+//     </li>
+//   );
+// });
 
 const mapStateToProps = state => ({
   ...state,

@@ -2,7 +2,7 @@ import ListErrors from './../ListErrors';
 import React from 'react';
 import agent from '../../agent';
 import { connect } from 'react-redux';
-import Select from 'react-select'; 
+// import Select from 'react-select'; 
 import {
   ADD_CERTIFICATE_PAGE_LOADED,
   ADD_CERTIFICATE_PAGE_UNLOADED,
