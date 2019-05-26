@@ -1,6 +1,6 @@
 import {
-  // HOME_PAGE_LOADED,
-  // HOME_PAGE_UNLOADED,
+  HOME_PAGE_LOADED,
+  HOME_PAGE_UNLOADED,
 } from '../constants/actionTypes';
 
 export default (state = {}, action) => {
