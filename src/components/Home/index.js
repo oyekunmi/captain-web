@@ -57,7 +57,9 @@ class Home extends React.PureComponent {
     this.props.vessels.forEach( (item, index)=>{
       items.push(
       <li key={index}>
-          <a  href="#/" value={item.id} onClick={()=>this.onVesselClicked(item)}>{item.name}</a>
+          <a  href="#/" value={item.id} onClick={()=>this.onVesselClicked(item)}>
+            {`${item.name}(${item.certificates_count})`}
+          </a>
         {/* <a  href="#/" to={`/users/${item.id}`} activeClassName="active" value={item.id} onClick={this.onVesselClicked}>{item.name}</a> */}
       </li>
 
