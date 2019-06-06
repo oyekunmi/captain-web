@@ -1,5 +1,6 @@
 import agent from '../agent'
 import Header from './Header'
+import SideBar from './Sidebar'
 import React, { lazy, Suspense } from 'react'
 import { connect } from 'react-redux'
 import { APP_LOAD, REDIRECT } from '../constants/actionTypes'
@@ -51,27 +52,30 @@ class App extends React.PureComponent {
   render () {
     if (this.props.appLoaded) {
       return (
-        <div>
-          <Header
+        <div className="layout">
+          {/* <Header
             appName={this.props.appName}
-            currentUser={this.props.currentUser} />
-            <Suspense fallback={<p>Loading...</p>}>
-              <Switch>
-                <Route exact path='/' component={Home} />
-                <Route path='/login' component={Login} />
-                <Route path='/vessel' component={AddVessel} />
-                <Route path='/vessel/:id' component={Vessel} />
-                <Route path='/certificate/add' component={AddCertificate} />
-              </Switch>
-            </Suspense>
+            currentUser={this.props.currentUser} /> */}
+            <SideBar />
+            <div id="main">
+              <Suspense fallback={<p>Loading...</p>}>
+                <Switch>
+                  <Route exact path='/' component={Home} />
+                  <Route path='/login' component={Login} />
+                  <Route path='/vessel' component={AddVessel} />
+                  <Route path='/vessel/:id' component={Vessel} />
+                  <Route path='/certificate/add' component={AddCertificate} />
+                </Switch>
+              </Suspense>
+            </div>
         </div>
       )
     }
     return (
       <div>
-        <Header
+        {/* <Header
           appName={this.props.appName}
-          currentUser={this.props.currentUser} />
+          currentUser={this.props.currentUser} /> */}
       </div>
     )
   }

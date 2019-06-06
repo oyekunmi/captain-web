@@ -1,0 +1,43 @@
+body{
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  background: green;
+  // width: 100%;
+}
+
+#root{
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+.layout{
+  display: grid;
+  grid-template-columns: 3fr 9fr;
+  height: 100%;;
+  
+}
+
+#sidebar{
+  background-color: #1B3C6D;  
+  display: grid;
+  grid-template-rows: 3fr 9fr;
+  padding-left: 100px;
+  // justify-items: ;
+}
+
+#main{
+  
+}
+
+.logo{
+  color: white;
+  // display:flex;
+  // flex: 1;
+  // align-content: center;
+  // vertical-align: middle;
+  // text-align: center;
+}
+
+.l-grid { margin: 0; padding: 0; list-style-type: none; } 
+.l-grid > li { margin: 0 0 10px 10px;}
